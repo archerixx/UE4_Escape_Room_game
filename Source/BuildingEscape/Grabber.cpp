@@ -36,11 +36,27 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FVector PlayerViewPointLocation;
 	FRotator PLayerViewPointRotation;
 	// we added (defined) OUT so we can remind ourselves that this is out_location\out_rotaton, that is will change out parametars
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation,OUT PLayerViewPointRotation); 
-	
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation,
+															   OUT PLayerViewPointRotation); 
 	
 	// Log out to test
-	UE_LOG(LogTemp, Warning, TEXT("Position: %s, Direction: %s"), *PlayerViewPointLocation.ToString(), *PLayerViewPointRotation.ToString());
+	/*UE_LOG(LogTemp, Warning, TEXT("Position: %s, Direction: %s"), 
+									*PlayerViewPointLocation.ToString(), 
+									*PLayerViewPointRotation.ToString()
+									);*/
+
+	// Draw a red trace om the wrp;d tp visual
+	FVector LineTraceEnd = PlayerViewPointLocation + (PLayerViewPointRotation.Vector() * Reach);
+	DrawDebugLine(
+		GetWorld(),
+		PlayerViewPointLocation,
+		LineTraceEnd,
+		FColor(255, 0, 0),
+		false,
+		0.f,
+		0.f,
+		10.f
+	);
 	// Ray-cast out to reach distance
 
 	// See what we hit
