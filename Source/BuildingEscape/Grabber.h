@@ -6,7 +6,6 @@
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/ActorComponent.h"
-#include "DrawDebugHelpers.h"
 #include "Grabber.generated.h"
 
 
