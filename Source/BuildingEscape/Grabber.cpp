@@ -51,6 +51,8 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	// protecting pointers (preventing game to crash)
+	if (!PhysicsHandle) { return; }
 	//if the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent)
 	{
@@ -65,9 +67,12 @@ void UGrabber::Grab()
 	auto HitResult = GetFirstPhysicsBodyInReach();
 	auto ComponentToGrab = HitResult.GetComponent(); // gets mesh in our case
 	auto ActorHit = HitResult.GetActor();
+
 	/// If we hit something then attach a physics handle
 	if (ActorHit != nullptr) // i wrote like this to understand what (ActorHit) means
 	{
+		// protecting pointers (preventing game to crash)
+		if (!PhysicsHandle) { return; }
 		PhysicsHandle->GrabComponent(ComponentToGrab,
 			NAME_None,
 			ComponentToGrab->GetOwner()->GetActorLocation(),
@@ -77,6 +82,8 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
+	// protecting pointers (preventing game to crash)
+	if (!PhysicsHandle) { return; }
 	PhysicsHandle->ReleaseComponent();
 }
 
